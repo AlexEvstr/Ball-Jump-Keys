@@ -9,12 +9,20 @@ public class RulesController : MonoBehaviour
     private float duration = 0.5f;
     private Coroutine currentCoroutine;
 
+    private MenuAudioController _menuAudioController;
+
+    private void Start()
+    {
+        _menuAudioController = GetComponent<MenuAudioController>();
+    }
+
     public void ScaleUp()
     {
         if (targetImage == null) return;
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(ScaleTo(new Vector3(1, 1, 1), true));
+        _menuAudioController.TapButtonSound();
     }
 
     public void ScaleDown()
@@ -23,6 +31,7 @@ public class RulesController : MonoBehaviour
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(ScaleTo(new Vector3(0, 0, 0), false));
+        _menuAudioController.TapButtonSound();
     }
 
     private IEnumerator ScaleTo(Vector3 targetScale, bool isActive)

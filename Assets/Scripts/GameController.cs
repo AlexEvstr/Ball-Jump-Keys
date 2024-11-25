@@ -1,24 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     [SerializeField] private Image fadeImage;
-    [SerializeField] private GameObject _menuWindow;
-    [SerializeField] private GameObject _levelsWindow;
-
-    [SerializeField] private GameObject _backButton;
-
-    private MenuAudioController _menuAudioController;
-
     private float duration = 0.5f;
 
     private void Start()
     {
-        _menuAudioController = GetComponent<MenuAudioController>();
-
-        _backButton.SetActive(false);
         Color color = fadeImage.color;
         color.a = 1;
         fadeImage.color = color;
@@ -26,33 +18,15 @@ public class MenuController : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
-    public void FadeToMenu()
+    public void OpenMenu()
     {
-        _menuAudioController.TapButtonSound();
-        StartCoroutine(FadeSequence(() =>
-        {
-            _levelsWindow.SetActive(false);
-            _backButton.SetActive(false);
-            _menuWindow.SetActive(true);
-        }));
+        StartCoroutine(BackToMenu());
     }
 
-    public void FadeToLevels()
+    private  IEnumerator BackToMenu()
     {
-        _menuAudioController.TapButtonSound();
-        StartCoroutine(FadeSequence(() =>
-        {
-            _menuWindow.SetActive(false);
-            _backButton.SetActive(true);
-            _levelsWindow.SetActive(true);
-        }));;
-    }
-
-    private IEnumerator FadeSequence(System.Action action)
-    {
-        yield return FadeIn();
-        action?.Invoke();
-        yield return FadeOut();
+        yield return StartCoroutine(FadeIn());
+        SceneManager.LoadScene("MenuScene");
     }
 
     private IEnumerator FadeIn()
