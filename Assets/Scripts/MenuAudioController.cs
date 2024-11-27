@@ -14,8 +14,8 @@ public class MenuAudioController : MonoBehaviour
 
     private void Start()
     {
-        _musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1);
-        if (_musicSource.volume == 1)
+        _musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        if (_musicSource.volume == 0.5f)
         {
             _musicOff.SetActive(false);
             _musicOn.SetActive(true);
@@ -69,8 +69,8 @@ public class MenuAudioController : MonoBehaviour
     {
         _musicOff.SetActive(false);
         _musicOn.SetActive(true);
-        _musicSource.volume = 1;
-        PlayerPrefs.SetFloat("MusicVolume", 1);
+        _musicSource.volume = 0.5f;
+        PlayerPrefs.SetFloat("MusicVolume", 0.5f);
         TapButtonSound();
     }
 

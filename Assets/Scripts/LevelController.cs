@@ -11,7 +11,7 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        int currentLevel = PlayerPrefs.GetInt("BestLevel", 1);
 
         for (int i = 0; i < levelButtons.Length; i++)
         {

@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private bool isMovingRight = false;
     private bool isMovingLeft = false;
 
+    [SerializeField] private GameAudioController _gameAudioController;
+
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -73,6 +75,7 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded())
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+            _gameAudioController.JumpSound();
         }
     }
 

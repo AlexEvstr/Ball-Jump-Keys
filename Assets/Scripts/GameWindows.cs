@@ -8,17 +8,27 @@ public class GameWindows : MonoBehaviour
 {
     [SerializeField] private GameObject _winWindow;
     [SerializeField] private GameObject _loseWindow;
+    [SerializeField] private GameObject _gameOverWindow;
     private GameObject targetWindow;
     [SerializeField] private Image _winFrame;
     [SerializeField] private Image _loseFrame;
+    [SerializeField] private Image _gameOverFrame;
     private Image targetImage;
     private float duration = 0.5f;
     private Coroutine currentCoroutine;
 
     [SerializeField] private Image fadeImage;
 
+    private GameAudioController _gameAudioController;
+
+    private void OnEnable()
+    {
+        _gameAudioController = GetComponent<GameAudioController>();
+    }
+
     public void OpenWin()
     {
+        _gameAudioController.WinSound();
         targetWindow = _winWindow;
         targetImage = _winFrame;
         ScaleUp();
@@ -26,8 +36,17 @@ public class GameWindows : MonoBehaviour
 
     public void OpenLose()
     {
+        _gameAudioController.LoseSound();
         targetWindow = _loseWindow;
         targetImage = _loseFrame;
+        ScaleUp();
+    }
+
+    public void OpenGameOver()
+    {
+        _gameAudioController.WinSound();
+        targetWindow = _gameOverWindow;
+        targetImage = _gameOverFrame;
         ScaleUp();
     }
 

@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     private float timeRemaining = 120f; // Время в секундах (2 минуты)
     public Text timerText; // Ссылка на текст для отображения времени
 
-    private bool isTimerRunning = false;
+    public bool isTimerRunning = false;
 
     private void Start()
     {
@@ -17,7 +17,8 @@ public class Timer : MonoBehaviour
 
     public void StartTimer()
     {
-        isTimerRunning = true;
+        if (PlayerPrefs.GetInt("CurrentLevel", 1) <= 8)
+            isTimerRunning = true;
     }
 
     private void Update()

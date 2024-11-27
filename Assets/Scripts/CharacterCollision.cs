@@ -4,6 +4,8 @@ using UnityEngine;
 public class CharacterCollision : MonoBehaviour
 {
     [SerializeField] private GameWindows _gameWindows;
+    [SerializeField] private Timer _timer;
+    [SerializeField] private GameAudioController _gameAudioController;
     private GameObject _door;
     private float duration = 0.5f;
 
@@ -19,11 +21,24 @@ public class CharacterCollision : MonoBehaviour
             collision.gameObject.SetActive(false);
             _door.transform.GetChild(1).gameObject.SetActive(false);
             _door.transform.GetChild(0).gameObject.SetActive(true);
+            _gameAudioController.KeySound();
         }
 
         else if (collision.gameObject.CompareTag("OpenedDoor"))
         {
+            _gameAudioController.DoorSound();
+            _timer.isTimerRunning = false;
             StartCoroutine(ScaleToZero());
+            int levelIndex = PlayerPrefs.GetInt("CurrentLevel", 1);
+            levelIndex++;
+            PlayerPrefs.SetInt("CurrentLevel", levelIndex);
+
+            int bestLevel = PlayerPrefs.GetInt("BestLevel", 1);
+            if (bestLevel < levelIndex)
+            {
+                bestLevel = levelIndex;
+                PlayerPrefs.SetInt("BestLevel", bestLevel);
+            }
         }
     }
 
