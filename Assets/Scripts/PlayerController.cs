@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Скорость движения
-    public float jumpForce = 10f; // Сила прыжка
-    public LayerMask groundLayer; // Слой земли
-    public Sprite idleSprite; // Спрайт для статичного состояния
-    public Sprite moveRightSprite; // Спрайт для движения вправо
-    public Sprite moveLeftSprite; // Спрайт для движения влево
-    public Button jumpButton; // Кнопка прыжка
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    public LayerMask groundLayer;
+    public Sprite idleSprite;
+    public Sprite moveRightSprite;
+    public Sprite moveLeftSprite;
+    public Button jumpButton;
 
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
@@ -26,27 +26,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Проверка на земле
         bool isGrounded = IsGrounded();
 
-        // Включение/выключение кнопки прыжка
         jumpButton.interactable = isGrounded;
 
-        // Движение
         if (isMovingRight)
         {
             rb2d.velocity = new Vector2(moveSpeed, rb2d.velocity.y);
-            spriteRenderer.sprite = moveRightSprite; // Меняем спрайт
+            spriteRenderer.sprite = moveRightSprite;
         }
         else if (isMovingLeft)
         {
             rb2d.velocity = new Vector2(-moveSpeed, rb2d.velocity.y);
-            spriteRenderer.sprite = moveLeftSprite; // Меняем спрайт
+            spriteRenderer.sprite = moveLeftSprite;
         }
         else
         {
             rb2d.velocity = new Vector2(0, rb2d.velocity.y);
-            spriteRenderer.sprite = idleSprite; // Возвращаем спрайт для статичного состояния
+            spriteRenderer.sprite = idleSprite;
         }
     }
 
@@ -81,13 +78,15 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        float rayLength = 0.5f; // Длина луча
-        Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y - 1f); // Смещение вниз
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, groundLayer);
+        Vector2 boxSize = new Vector2(0.5f, 0.1f);
 
-        // Визуализация луча для отладки
-        Debug.DrawRay(rayOrigin, Vector2.down * rayLength, Color.red);
+        Vector2 boxCenter = new Vector2(transform.position.x, transform.position.y - 1f);
 
-        return hit.collider != null;
+        Collider2D hit = Physics2D.OverlapBox(boxCenter, boxSize, 0f, groundLayer);
+
+        Debug.DrawLine(boxCenter - new Vector2(boxSize.x / 2, 0), boxCenter + new Vector2(boxSize.x / 2, 0), Color.green);
+        Debug.DrawLine(boxCenter - new Vector2(boxSize.x / 2, boxSize.y), boxCenter + new Vector2(boxSize.x / 2, -boxSize.y), Color.green);
+
+        return hit != null;
     }
 }

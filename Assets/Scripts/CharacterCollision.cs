@@ -44,21 +44,18 @@ public class CharacterCollision : MonoBehaviour
 
     private IEnumerator ScaleToZero()
     {
-        Vector3 initialScale = transform.localScale; // Начальный масштаб
-        Vector3 targetScale = Vector3.zero; // Целевой масштаб (0,0,0)
+        Vector3 initialScale = transform.localScale;
+        Vector3 targetScale = Vector3.zero;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
-            // Интерполяция между начальным и конечным масштабом
             transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Убедимся, что объект точно достиг целевого масштаба
         transform.localScale = targetScale;
-        //gameObject.SetActive(false);
         _gameWindows.OpenWin();
     }
 }

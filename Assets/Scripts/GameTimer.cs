@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     private GameWindows _gameWindows;
-    private float timeRemaining = 120f; // Время в секундах (2 минуты)
-    public Text timerText; // Ссылка на текст для отображения времени
+    private float timeRemaining = 120f;
+    public Text timerText;
 
     public bool isTimerRunning = false;
 
@@ -42,11 +42,9 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        // Преобразуем оставшееся время в минуты и секунды
         int minutes = Mathf.FloorToInt(timeRemaining / 60);
         int seconds = Mathf.FloorToInt(timeRemaining % 60);
 
-        // Форматируем строку для отображения
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 

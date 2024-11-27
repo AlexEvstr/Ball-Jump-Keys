@@ -56,7 +56,6 @@ public class GameWindows : MonoBehaviour
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(ScaleTo(new Vector3(1, 1, 1), true));
-        //_menuAudioController.TapButtonSound();
     }
 
     private IEnumerator ScaleTo(Vector3 targetScale, bool isActive)
